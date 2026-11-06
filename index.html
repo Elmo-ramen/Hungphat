@@ -542,6 +542,9 @@ details.zfull>summary small{font-weight:500;color:var(--mut)}
 @media (max-width:640px){.sw4 button span{display:none}.sw4 button{padding:12px 8px}}
 
 /* ===== v4: logo, spine, AI ===== */
+.topr{display:flex;gap:12px;align-items:center}
+.tbtn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#E9F2EC;border-radius:99px;padding:6px 14px;cursor:pointer;font:inherit;font-size:13px;font-weight:600}
+.tbtn:hover{background:rgba(255,255,255,.2)}
 .top b{display:flex;align-items:center}
 .blogo{display:inline-grid;place-items:center;background:#fff;border-radius:10px;padding:5px 10px;margin-right:12px}
 .blogo img{height:20px;width:auto;display:block}
@@ -589,7 +592,7 @@ details.zfull>summary small{font-weight:500;color:var(--mut)}
 <body>
 <header class="hero"><canvas id="bg" aria-hidden="true"></canvas>
 <div class="wrap">
-<div class="top"><b><span class="blogo"><img data-logo="base" alt="Base"></span>Bao bì Hưng Phát · Mua hàng</b><span>Base BPM · hướng dẫn sử dụng</span></div>
+<div class="top"><b><span class="blogo"><img data-logo="base" alt="Base"></span>Bao bì Hưng Phát · Mua hàng</b><span class="topr"><span>Base BPM · hướng dẫn sử dụng</span><button class="tbtn" id="theme-btn" type="button">◐ Sáng / tối</button></span></div>
 <h1>Hướng dẫn sử dụng</h1>
 <p class="lede">Gõ vào ô tìm hoặc chọn một câu hỏi để đi thẳng tới màn hình cần xem.</p>
 <div class="zs" role="search">
@@ -768,6 +771,11 @@ var $=function(i){return document.getElementById(i)};
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d')}
 var SYS='Hệ thống BPM Base';
+var tb=$('theme-btn');
+function curDark(){var t=document.documentElement.getAttribute('data-theme');return t?t==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function paintTb(){var d=curDark();tb.textContent=d?'☀ Giao diện sáng':'☾ Giao diện tối';tb.setAttribute('aria-label',d?'Chuyển sang giao diện sáng':'Chuyển sang giao diện tối')}
+try{var sv=localStorage.getItem('hd-theme');if(sv)document.documentElement.setAttribute('data-theme',sv)}catch(e){}
+tb.addEventListener('click',function(){var n=curDark()?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('hd-theme',n)}catch(e){}paintTb()});paintTb();
 
 /* ===== nền chìm ===== */
 (function(){
